@@ -10,14 +10,29 @@ const { expect } = require('chai');
 //
 // contrainte : pas de mutation
 
-function move(robot) {
+function move(robot, command) {
   const x = robot.position[0];
   const y = robot.position[1];
 
-  if (y == 5) {
-    return { position: [x, 1] }
+  let increment;
+
+  if (command == 'b') {
+    if (y == 1) {
+       increment = 4;
+    } else {
+      increment = -1;
+    }
   }
-  return { position: [x, y+1] }
+  else {
+    if (y == 5) {
+      increment = -4;
+    }
+    else {
+      increment = 1;
+    }
+  }
+
+  return { position: [x, y + increment] }
 }
 
 // --------------------------
@@ -72,4 +87,48 @@ it('moves forward from 1, 5 when facing North', () => {
 
   // then
   expect(moved_robot.position).to.deep.equal([1, 1]);
+});
+
+it('moves backward from 1, 2 when facing North', () => {
+  // given
+  const robot = { position: [1, 2], orientation: 'N' };
+
+  // when
+  const moved_robot = move(robot, 'b');
+
+  // then
+  expect(moved_robot.position).to.deep.equal([1, 1]);
+});
+
+it('moves backward from 1, 3 when facing North', () => {
+  // given
+  const robot = { position: [1, 3], orientation: 'N' };
+
+  // when
+  const moved_robot = move(robot, 'b');
+
+  // then
+  expect(moved_robot.position).to.deep.equal([1, 2]);
+});
+
+it('moves backward from 1, 1 when facing North', () => {
+  // given
+  const robot = { position: [1, 1], orientation: 'N' };
+
+  // when
+  const moved_robot = move(robot, 'b');
+
+  // then
+  expect(moved_robot.position).to.deep.equal([1, 5]);
+});
+
+it('moves backward from 2, 2 when facing North', () => {
+  // given
+  const robot = { position: [2, 2], orientation: 'N' };
+
+  // when
+  const moved_robot = move(robot, 'b');
+
+  // then
+  expect(moved_robot.position).to.deep.equal([2, 1]);
 });
