@@ -10,15 +10,27 @@ const { expect } = require('chai');
 //
 // contrainte : pas de mutation
 
+// Refactorer vers du code objet ?
+// -> Extraire une méthode ?
+
+// Notion de closure : quand on définit une fonction, elle embarque dans son
+// scope les variables disponibles à l'endroit de sa déclaration
+
 function move(robot, command) {
   const x = robot.position[0];
   const y = robot.position[1];
 
+  const increment = _getIncrement(command, y);
+
+  return { position: [x, y + increment] }
+}
+
+function _getIncrement(command, y) {
   let increment;
 
   if (command == 'b') {
     if (y == 1) {
-       increment = 4;
+      increment = 4;
     } else {
       increment = -1;
     }
@@ -32,7 +44,7 @@ function move(robot, command) {
     }
   }
 
-  return { position: [x, y + increment] }
+  return increment;
 }
 
 // --------------------------
