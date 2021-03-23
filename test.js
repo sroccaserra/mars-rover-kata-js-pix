@@ -22,41 +22,27 @@ class Robot {
   }
 
   move(command) {
-    const moved_robot = move(this, command);
-    this.position = moved_robot.position;
+    const y_increment = this._getYIncrement(command);
+
+    this.position[1] += y_increment;
   }
-}
 
-
-function move(robot, command) {
-  const x = robot.position[0];
-  const y = robot.position[1];
-
-  const increment = _getIncrement(command, y);
-
-  return { position: [x, y + increment] }
-}
-
-function _getIncrement(command, y) {
-  let increment;
-
-  if (command == 'b') {
-    if (y == 1) {
-      increment = 4;
-    } else {
-      increment = -1;
+  _getYIncrement(command) {
+    if (command == 'b') {
+      if (this.position[1] == 1) {
+        return 4;
+      } else {
+        return -1;
+      }
     }
-  }
-  else {
-    if (y == 5) {
-      increment = -4;
+
+    if (this.position[1] == 5) {
+      return -4;
     }
     else {
-      increment = 1;
+      return 1;
     }
   }
-
-  return increment;
 }
 
 // --------------------------
