@@ -12,6 +12,21 @@ const { expect } = require('chai');
 
 // Refactorer vers du code objet ?
 
+class Robot {
+  constructor({
+    position,
+    orientation
+  }) {
+    this.position = position;
+    this.orientation = orientation;
+  }
+  move(command) {
+    const moved_robot = move(this, command);
+    this.position = moved_robot.position;
+  }
+}
+
+
 function move(robot, command) {
   const x = robot.position[0];
   const y = robot.position[1];
@@ -55,24 +70,24 @@ function _getIncrement(command, y) {
 
 it('moves forward from 1, 1 when facing North', () => {
   // given
-  const robot = { position: [1, 1], orientation: 'N' };
+  const robot = new Robot({ position: [1, 1], orientation: 'N' });
 
   // when
-  const moved_robot = move(robot, 'f');
+  robot.move('f');
 
   // then
-  expect(moved_robot.position).to.deep.equal([1, 2]);
+  expect(robot.position).to.deep.equal([1, 2]);
 });
 
 it('moves forward from 1, 2 when facing North', () => {
   // given
-  const robot = { position: [1, 2], orientation: 'N' };
+  const robot = new Robot({ position: [1, 2], orientation: 'N' });
 
   // when
-  const moved_robot = move(robot, 'f');
+  robot.move('f');
 
   // then
-  expect(moved_robot.position).to.deep.equal([1, 3]);
+  expect(robot.position).to.deep.equal([1, 3]);
 });
 
 it('moves forward from 3, 1 when facing North', () => {
