@@ -11,10 +11,6 @@ const { expect } = require('chai');
 // contrainte : pas de mutation
 
 // Refactorer vers du code objet ?
-// -> Extraire une méthode ?
-
-// Notion de closure : quand on définit une fonction, elle embarque dans son
-// scope les variables disponibles à l'endroit de sa déclaration
 
 function move(robot, command) {
   const x = robot.position[0];
